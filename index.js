@@ -31,7 +31,7 @@ import cookieParser from 'cookie-parser'
 app.use(cookieParser())
 
 app.use(async (req, res, next) => {
-    const {token} = req.cookies
+    const token = req.cookies['krydd-token']
     if (token) {
         const parsed = jwt.verify(token, process.env.SECRET)
         req.user = användare.find(u => u.password===parsed.password && u.username===parsed.username)
