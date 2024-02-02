@@ -1,0 +1,83 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    font-family: monospace;
+    color: #dedede;
+}
+
+html {
+    font-size: 18px;
+}
+
+body, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+body {
+    background-color: #232323;
+}
+
+body > * {
+    width: 500px;
+    max-width: 100%;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr:has(th) {
+    position: relative;
+}
+
+th {
+    background-color: black;
+    color: white;
+    position: sticky;
+    top: 0;
+}
+
+td {
+    padding: .5rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    cursor: pointer;
+}
+
+input, option, button, select {
+    font-size: 18px;
+    padding: .5rem;
+    width: 100%;
+    margin: .5rem 0;
+    background-color: black;
+    color: white;
+}
+
+button {
+    border: 2px outset black;
+}
+
+input, button:active {
+    border: 2px inset black;
+}
+
+footer {
+    padding-bottom: 2rem;
+}
