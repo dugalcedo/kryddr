@@ -8,7 +8,9 @@ html(lang="en")
         title Kryddhora
     body
         header
-            h1 Välkommen, #{user.username}
+            -
+                const username = user?.username || 'gäst'
+            h1 Välkommen, #{username}
         main
             block main
         footer
