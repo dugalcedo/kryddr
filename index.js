@@ -17,6 +17,7 @@ const app = express()
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 dotenv.config()
+const PORT = process.env.PORT || 4321
 
 import { Kategori } from './models/Kategori.js'
 import { Objekt } from './models/Objekt.js'
@@ -70,8 +71,8 @@ start()
 async function start() {
     try {
         const conn = await mongoose.connect(process.env.DBURI)
-        app.listen(4321, ()=>{
-            console.log(`http://localhost:4321`)
+        app.listen(PORT, ()=>{
+            console.log(`http://localhost:${PORT}`)
         })
     } catch (error) {
         console.log(error)
