@@ -11,6 +11,10 @@ html(lang="en")
             -
                 const username = user?.username || 'gäst'
             h1 Välkommen, #{username}
+            if user
+                nav
+                    a(href="/") hem
+                    a(href="/add") ny
         main
             block main
         footer

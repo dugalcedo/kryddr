@@ -30,6 +30,9 @@ app.use(express.json())
 import cookieParser from 'cookie-parser'
 app.use(cookieParser())
 
+const sani = str => str.replaceAll(/\s+/gm,' ').trim().toLowerCase()
+const eq = (s1, s2) => sani(s1) === sani(s2)
+
 app.use(async (req, res, next) => {
     const token = req.cookies['krydd-token']
     if (token) {
@@ -42,6 +45,11 @@ app.use(async (req, res, next) => {
 app.get('/', async (req, res) => {
     const kategorier = req.user ? await Kategori.find({}).populate('objekter').exec() : []
     res.render('pages/home', {kategorier, user: req.user})
+})
+
+app.get('/add', async (req, res) => {
+    const kategorier = req.user ? await Kategori.find({}).populate('objekter').exec() : []
+    res.render('pages/add', {kategorier, user: req.user})
 })
 
 app.put('/api/kryddstatus', async (req, res) => {
@@ -67,11 +75,46 @@ app.get('/api/login', async (req, res) => {
     res.json({token})
 })
 
+app.get('/api/add', async (req, res) => {
+    let namn = req.query.namn
+    namn = namn[0].toUpperCase() + namn.slice(1).toLowerCase()
+
+    const objekter = Objekt.find({})
+    const objektMatch = objekter.some(o => eq(o.namn, namn))
+
+    if (objektMatch) {
+        res.json({ error: true, message: `Det finns redan en vara som kallas "${namn}"` })
+        return
+    }
+
+    try {
+        var nyObjekt = new Objekt({namn: sani(namn)})
+        await nyObjekt.save()
+    } catch (error) {
+        res.json({ error: true, message: `Något gick fel.` })
+        return
+    }
+
+    const kategoriMatch = Kategori.findOne({_id: req.query.kid})
+
+    if (!kategoriMatch) {
+        res.json({ error: true, message: `Kategori id var fel.` })
+        return
+    }
+
+    kategoriMatch.objekter.push(nyObjekt._id)
+    await kategoriMatch.save()
+
+    res.json({})
+})
+
 start()
 async function start() {
     try {
         const conn = await mongoose.connect(process.env.DBURI)
-        app.listen(PORT, ()=>{
+        app.listen(PORT, async ()=>{
+            const kategorier = await Kategori.find({})
+            console.log(kategorier)
             console.log(`http://localhost:${PORT}`)
         })
     } catch (error) {

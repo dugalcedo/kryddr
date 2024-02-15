@@ -1,0 +1,20 @@
+extends ../layout.pug
+
+block scripts 
+    script(src="/js/add.js") 
+
+block main
+    if !user
+        span du måste vara inloggad
+    else
+        h2 Lägg till ny vara
+        form#add
+            input(name="objektnamn" placeholder="varas namn")
+            .field
+                div#valjakategori.flex.jcsb.aic
+                    span välja kategori
+                    button(type="button")#nykategori ny kategori
+                    select(name="kid")
+                        each kategori in kategorier
+                            option(value=kategori._id)= kategori.namn
+            button(type="submit") tillägga

@@ -8,5 +8,8 @@
 		"mongoose": "^8.1.1",
 		"pug": "^3.0.2"
 	},
-	"type": "module"
+	"type": "module",
+	"scripts": {
+		"dev": "nodemon -e pug,js index"
+	}
 }

@@ -25,8 +25,23 @@ body > * {
     margin: auto;
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 h1 {
     text-align: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    padding: 1rem;
 }
 
 table {
@@ -80,4 +95,11 @@ input, button:active {
 
 footer {
     padding-bottom: 2rem;
+}
+
+#valjakategori {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
